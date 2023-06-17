@@ -1,4 +1,5 @@
 from pages.product_page import ProductPage
+from pages.basket_page import BasketPage
 import pytest
 from pages.locators import ProductPageLocators
 
@@ -30,7 +31,7 @@ def test_guest_can_add_product_to_basket(browser, link_tail):
     page.should_be_price_added_equals_price_in_message()
 
 
-@pytest.mark.xfail
+@pytest.mark.skip # xfail
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
     page = ProductPage(browser, link)
@@ -49,10 +50,10 @@ def test_guest_cant_see_success_message(browser):
     page.open()
 
     assert page.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
-           "All right! Succes message isn't available."
+           "All right! Success message isn't available."
 
 
-@pytest.mark.xfail
+@pytest.mark.skip # xfail
 def test_message_disappeared_after_adding_product_to_basket(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
     page = ProductPage(browser, link)
@@ -64,8 +65,19 @@ def test_message_disappeared_after_adding_product_to_basket(browser):
            "Message success isn't disappeared."
 
 
+@pytest.mark.skip
 def test_guest_should_see_login_link_on_product_page(browser):
     link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
     page = ProductPage(browser, link)
     page.open()
     page.should_be_login_link()
+
+
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-shellcoders-handbook_209/"
+    page = ProductPage(browser, link)
+    page.open()
+    page.go_to_basket()
+    basket_page = BasketPage(browser, url=browser.current_url)
+
+    assert basket_page.is_basket_empty() and basket_page.basket_has_no_products(), "Basket isn't empty"

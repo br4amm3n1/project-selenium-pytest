@@ -56,6 +56,10 @@ class BasePage:
 
         return True
 
+    def go_to_basket(self):
+        login_link = self.browser.find_element(*BasePageLocators.BASKET_BUTTON)
+        login_link.click()
+        
     def go_to_login_page(self):
         login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK_INVALID)
         login_link.click()
