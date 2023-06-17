@@ -30,4 +30,3 @@ class ProductPage(BasePage):
     def add_in_basket(self):
         add_button = self.browser.find_element(*ProductPageLocators.BUTTON_ADD_TO_BASKET)
         add_button.click()
-        # self.browser.implicitly_wait(10)  # ожидание появления сообщений об успешном добавлении в корзину товара
